@@ -1,6 +1,8 @@
 package org.mycompany.animals.dogs;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.mycompany.animals.AnimalFactory;
@@ -9,10 +11,10 @@ import org.mycompany.animals.FactoryProvider;
 import org.mycompany.animals.dogs.config.DogRegistryConfig;
 import org.mycompany.animals.dogs.domain.Dog;
 import org.mycompany.animals.dogs.domain.DogBreed;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.JAXBException;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.EnumMap;
@@ -20,6 +22,8 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -28,10 +32,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class DogRegistryTest {
 
-    /**
-     * Log instance used for logging purposes.
-     */
-    private static final Logger log = LoggerFactory.getLogger(DogRegistryTest.class);
+    private static final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private static final PrintStream originalOut = System.out;
+
     /**
      * XML file to read and load a list of Dogs from.
      */
@@ -90,6 +93,7 @@ class DogRegistryTest {
     public static void init() throws JAXBException {
         animalFactory = FactoryProvider.getFactory(AnimalType.DOG);
         dogRegistry = (DogRegistry) animalFactory.load(dogsFile);
+        System.setOut(new PrintStream(outContent));
         DogRegistryConfig.setEnableLogging(true);
     }
 
@@ -98,6 +102,7 @@ class DogRegistryTest {
      */
     @AfterAll
     public static void cleanUp() {
+        System.setOut(originalOut);
         dogRegistry = null;
     }
 
@@ -137,7 +142,6 @@ class DogRegistryTest {
         List<Dog> dogList = dogRegistry.dogsByCondition(predicate);
         assertEquals(1, dogList.size());
         assertEquals("Rex", dogList.get(0).getName());
-        log.debug("List of Dogs with predicate: " + dogList);
     }
 
     /**
@@ -153,7 +157,32 @@ class DogRegistryTest {
         assertEquals("05-02-2005", dog.getDateOfBirth());
         assertEquals(38.0, dog.getWeight());
         assertEquals("Rhodesian Ridgeback", dog.getBreed().value());
-        log.debug("Oldest Dog after " + date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +  " is: " + dog);
+    }
+
+    @Test
+    void loadNonValidFile() {
+        assertThrows(JAXBException.class, () -> {
+            animalFactory = FactoryProvider.getFactory(AnimalType.DOG);
+            animalFactory.load("fake.xml");
+        });
+    }
+
+    @Test
+    void nonValidAnimalType() {
+        animalFactory = FactoryProvider.getFactory(AnimalType.CAT);
+        assertNull(animalFactory);
+    }
+
+    @Test
+    void enableLogging(){
+        DogRegistryConfig.setEnableLogging(true);
+        assertThat(outContent.toString(), containsString("logging is enabled"));
+    }
+
+    @Test
+    void disableLogging(){
+        DogRegistryConfig.setEnableLogging(false);
+        assertThat(outContent.toString(), containsString("logging is disabled"));
     }
 
 }

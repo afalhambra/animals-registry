@@ -7,7 +7,7 @@
         </encoder>
     </appender>
 
-    <logger name="org.mycompany.animals" level="OFF">
+    <logger name="org.mycompany.animals" level="OFF" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 

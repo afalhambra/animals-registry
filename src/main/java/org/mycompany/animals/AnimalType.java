@@ -6,5 +6,5 @@ package org.mycompany.animals;
  * @author Antonio Fernandez Alhambra
  */
 public enum AnimalType {
-    DOG
+    DOG, CAT
 }

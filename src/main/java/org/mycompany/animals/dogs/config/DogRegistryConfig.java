@@ -17,6 +17,11 @@ import java.time.format.DateTimeFormatter;
 public class DogRegistryConfig {
 
     /**
+     * Log instance used for logging purposes.
+     */
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(DogRegistryConfig.class);
+
+    /**
      * The default date format to be use for parsing {@link org.mycompany.animals.dogs.domain.Dog}
      */
     private String dateFormat = "dd-MM-yyyy";
@@ -46,8 +51,10 @@ public class DogRegistryConfig {
         LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
         Logger rootLogger = loggerContext.getLogger("org.mycompany.animals");
         if (enableLogging) {
+            log.debug("logging is enabled to DEBUG level");
             rootLogger.setLevel(Level.DEBUG);
         } else {
+            log.debug("logging is disabled");
             rootLogger.setLevel(Level.OFF);
         }
     }

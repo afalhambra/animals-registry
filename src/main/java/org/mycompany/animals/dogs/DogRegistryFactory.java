@@ -47,8 +47,8 @@ public class DogRegistryFactory implements AnimalFactory<DogRegistry> {
 
         List<Dog> dogList = dogs.getDogs();
 
-        log.debug("Loaded file with " + dogList);
+        log.debug("File loaded file with dogs: " + dogList);
 
-        return new DogRegistryImpl(fileName, dogList);
+        return new DogRegistryImpl(dogList);
     }
 }

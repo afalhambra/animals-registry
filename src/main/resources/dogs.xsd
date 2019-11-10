@@ -1,0 +1,46 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	jaxb:version="2.0"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+
+    <xs:annotation>
+        <xs:appinfo>
+            <jaxb:schemaBindings>
+                <jaxb:package name="org.mycompany.animals.dogs.domain"/>
+            </jaxb:schemaBindings>
+        </xs:appinfo>
+    </xs:annotation>
+
+	<xs:simpleType name="dogsBreedEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Rhodesian Ridgeback"/>
+			<xs:enumeration value="Bernese Mountain Dog"/>
+			<xs:enumeration value="Shiba Inu"/>
+			<xs:enumeration value="Siberian Husky"/>
+			<xs:enumeration value="German Shepherd"/>
+			<xs:enumeration value="Labrador Retriever"/>
+			<xs:enumeration value="Greyhound"/>
+			<xs:enumeration value="Japanese Spitz"/>
+			<xs:enumeration value="Bohemian Wirehaired Pointing Griffon"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="dogs">
+		  <xs:complexType>
+				 <xs:sequence>
+						<xs:element name="dog" minOccurs="0" maxOccurs="unbounded">
+							   <xs:complexType>
+									  <xs:sequence>
+											 <xs:element name="dateOfBirth" type="xs:string"/>
+											 <xs:element name="weight" type="xs:int"/>
+											 <xs:element name="breed" type="dogsBreedEnum"/>
+										 </xs:sequence>
+									  <xs:attribute name="name" type="xs:string"/>
+								  </xs:complexType>
+						   </xs:element>
+					</xs:sequence>
+			 </xs:complexType>
+	</xs:element>
+
+</xs:schema>

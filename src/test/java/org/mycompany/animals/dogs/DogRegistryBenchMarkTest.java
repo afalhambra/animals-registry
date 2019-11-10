@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.mycompany.animals.AnimalFactory;
 import org.mycompany.animals.AnimalType;
 import org.mycompany.animals.FactoryProvider;
-import org.mycompany.animals.dogs.domain.DogBreed;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.runner.Runner;
@@ -64,9 +63,9 @@ public class DogRegistryBenchMarkTest {
                 .mode(Mode.AverageTime)
                 .timeUnit(TimeUnit.MICROSECONDS)
                 .warmupTime(TimeValue.microseconds(1))
-                .warmupIterations(10)
+                .warmupIterations(5)
                 .measurementTime(TimeValue.microseconds(1))
-                .measurementIterations(2)
+                .measurementIterations(5)
                 .threads(2)
                 .forks(1)
                 .shouldFailOnError(true)
@@ -76,12 +75,18 @@ public class DogRegistryBenchMarkTest {
     }
 
     /**
-     * Benchmarks the method call to method "averageWeight" of {@link org.mycompany.animals.dogs.DogRegistryImpl}
+     * Benchmarks the method call to {@link DogRegistryImpl#averageWeightPerBreed()} method
      * class.
-     * Dog breed used to calculate this weight average is "Siberian Husky"
      */
     @Benchmark
     public void benchMarkAverageWeight(){
-        dogRegistry.averageWeight(DogBreed.SIBERIAN_HUSKY);
+        dogRegistry.averageWeightPerBreed();
+    }
+
+    @Benchmark
+    public int baseline(){
+        int a = 1;
+        int b = 2;
+        return a+b;
     }
 }

@@ -163,7 +163,7 @@ To generate all the API documentation, follow steps below:
 
 ## Versioning
 
-For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+For the versions available, see the [releases on this repository](https://github.com/afalhambra/animals-registry/releases). 
 
 ## Authors
 

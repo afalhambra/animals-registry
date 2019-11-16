@@ -2,6 +2,10 @@ package org.mycompany.animals;
 
 import org.mycompany.animals.dogs.DogRegistryFactory;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
+
 /**
  * Factory provider to get a concrete animal factory {@link AnimalFactory}
  * based on the type of animal passed as an argument in the getFactory method.
@@ -9,6 +13,17 @@ import org.mycompany.animals.dogs.DogRegistryFactory;
  *  @author Antonio Fernandez Alhambra
  */
 public class FactoryProvider {
+
+    /**
+     * Static {@link Map} object containing all the available factories in the application
+     * for each {@link AnimalType}
+     */
+    private final static Map<AnimalType, Supplier<AnimalFactory>> factoryMap = new HashMap<>();
+
+    static {
+        factoryMap.put(AnimalType.DOG, DogRegistryFactory::new);
+    }
+
     /**
      * Returns an instance of a concrete animal factory based on the animal type passed as argument
      * @param animalType {@link AnimalType}
@@ -16,11 +31,12 @@ public class FactoryProvider {
      * if not available
      */
     public static AnimalFactory getFactory(AnimalType animalType){
-        
-        if(AnimalType.DOG == animalType){
-            return new DogRegistryFactory();
-        } else {
-            return null;
+
+        Supplier<AnimalFactory> animalFactory = factoryMap.get(animalType);
+
+        if (animalFactory != null) {
+            return animalFactory.get();
         }
+        throw new IllegalArgumentException("This animal is not available");
     }
 }

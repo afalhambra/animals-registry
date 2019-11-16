@@ -168,9 +168,10 @@ class DogRegistryTest {
     }
 
     @Test
-    void nonValidAnimalType() {
-        animalFactory = FactoryProvider.getFactory(AnimalType.CAT);
-        assertNull(animalFactory);
+    void nonValidAnimalFactoryType() {
+        assertThrows(IllegalArgumentException.class, () ->{
+            animalFactory = FactoryProvider.getFactory(AnimalType.CAT);
+        });
     }
 
     @Test

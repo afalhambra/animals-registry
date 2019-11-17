@@ -20,7 +20,6 @@
         <istack-runtime.version>3.0.10</istack-runtime.version>
         <jupiter-api.version>5.4.2</jupiter-api.version>
         <hamcrest.version>1.3</hamcrest.version>
-        <jmh.version>1.22</jmh.version>
         <javadoc-plugin.version>3.1.1</javadoc-plugin.version>
         <surface-plugin.version>3.0.0-M3</surface-plugin.version>
     </properties>
@@ -93,18 +92,6 @@
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
             <version>${hamcrest.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.openjdk.jmh</groupId>
-            <artifactId>jmh-core</artifactId>
-            <version>${jmh.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.openjdk.jmh</groupId>
-            <artifactId>jmh-generator-annprocess</artifactId>
-            <version>${jmh.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

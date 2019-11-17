@@ -20,7 +20,7 @@ When using Maven, you can just add a dependency in your POM file to use it.
     <dependency>
         <groupId>org.mycompany.animals.dogs</groupId>
         <artifactId>animals-registry</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.2-SNAPSHOT</version>
     </dependency>
 ```
 
@@ -131,17 +131,6 @@ To run the automated test cases you should:
 
     ```
     mvn -Dtest=DogRegistryTest test
-    ```
-
-### Micro-benchmark test cases
-
-To run the automated test cases you should:
-
-1. Open a terminal window and change directory to your Maven project. You should be in a directory that contains pom.xml file,
-2. Run the below command
-
-    ```
-    mvn -Dtest=DogRegistryBenchMarkTest test
     ```
 
 ## API Documentation

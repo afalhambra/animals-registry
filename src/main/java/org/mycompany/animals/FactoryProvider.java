@@ -29,6 +29,8 @@ public class FactoryProvider {
      * @param animalType {@link AnimalType}
      * @return A concrete instance of {@link AnimalFactory} available or null
      * if not available
+     * @throws IllegalArgumentException Exception to be thrown in case the {@link AnimalType} object passed
+     * is not implemented
      */
     public static AnimalFactory getFactory(AnimalType animalType){
 
